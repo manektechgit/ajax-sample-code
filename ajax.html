@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Ajax Table</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Visit Now</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var result = [];
+            var html = '';
+            $.ajax({
+                url: 'http://universities.hipolabs.com/search?name=middle',
+                type: "GET",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $.each(data, function(key,value) {
+                        html = html + `<tr><td>${key+1}</td>
+                                    <td>${value.name}</td>
+                                    <td>${value.country}</td>
+                                    <td><a href="${value.web_pages[0]}" target="_blank">Visit Website</td></tr>`;
+                    });
+                    $('tbody').html(html)
+                },
+                error: function () {
+                    alert("Something went wrong. Please try again.");
+                },
+            });
+        });
+    </script>
+</body>
+
+</html>
